@@ -19,7 +19,6 @@ class FilmController extends Controller
      */
     public function movies()
     {
-        //
         $genreFilm = null;
         $films = Film::select('id','title', 'poster','year')
                 ->orderByDesc('year')
@@ -49,7 +48,6 @@ class FilmController extends Controller
      */
     public function show(Film $film)
     {
-        //
         $filmByGenre    = Film::select('id','title', 'poster','year', 'sinopsis')
                         ->where('genre_id', '=', $film->genre_id)
                         ->OrderBy('created_at', 'asc')
@@ -60,9 +58,9 @@ class FilmController extends Controller
                         ->OrderBy('created_at', 'asc')
                         ->limit(9)
                         ->get();
-        $comments        = Kritik::select('comment', 'user_id')
+        $comments       = Kritik::with('user')
                         ->where('film_id', '=', $film->id)
-                        ->orderBy('created_at', 'asc')
+                        ->orderByDesc('created_at')
                         ->limit(10)
                         ->get();
         $perans         = Peran::all()->where('film_id', '=', $film->id);
@@ -114,7 +112,6 @@ class FilmController extends Controller
 
     public function moviesByGenre($genre)
     {
-        //
         $genreFilm = Genre::where('id', '=', $genre)->first();
         $films = Film::select('id','title', 'poster','year')
                 ->where('genre_id', '=', $genre)
