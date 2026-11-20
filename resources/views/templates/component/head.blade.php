@@ -31,7 +31,7 @@
   <script type="text/javascript" src="{{ asset('template/js/easing.js') }}"></script>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      $(".scroll").click(function(event){		
+      $(".scroll").click(function(event){   
         event.preventDefault();
         $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
       });
@@ -43,17 +43,22 @@
   <script>
     $(document).ready(function() { 
       $("#owl-demo").owlCarousel({
-     
-        autoPlay: 3000, //Set AutoPlay to 3 seconds
-     
+        autoPlay: 3000,
         items : 5,
         itemsDesktop : [640,5],
         itemsDesktopSmall : [414,4]
-     
       });
-     
     }); 
   </script> 
 
   @stack('style')
-  </head>
+
+  <style>
+    .w3l-movie-gride-agile img,
+    .w3l-movie-gride-agile1 img {
+      width: 100% !important;
+      height: 268px !important;
+      object-fit: cover !important;
+    }
+  </style>
+</head>
