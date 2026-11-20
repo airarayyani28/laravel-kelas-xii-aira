@@ -13,8 +13,8 @@
       <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
         <nav>
           <ul class="nav navbar-nav">
-            <li class="w3_home_act {{ Route::current()->getName() == 'home' ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a></li>
-            <li class="dropdown {{ Route::current()->getName() == 'genre' ? 'active' : '' }}">
+            <li class="w3_home_act {{ Route::currentRouteName() == 'home' ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a></li>
+            <li class="dropdown {{ Route::currentRouteName() == 'genre' ? 'active' : '' }}">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Genres <b class="caret"></b></a>
               <ul class="dropdown-menu multi-column columns-3">
                 <li>
@@ -35,11 +35,32 @@
                 </li>
               </ul>
             </li>
-            <li class="w3_home_act {{ Route::current()->getName() == 'movies' ? 'active' : '' }}"><a href="{{ route('movies') }}">Movies</a></li>
+            <li class="w3_home_act {{ Route::currentRouteName() == 'movies' ? 'active' : '' }}"><a href="{{ route('movies') }}">Movies</a></li>
 
+            @guest
+              <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
+            @endguest
+
+            @auth
+              @if(Auth::user()->role_id == 2)
+                <li class="{{ str_starts_with(Route::currentRouteName() ?? '', 'admin.') ? 'active' : '' }}">
+                  <a href="{{ route('admin.dashboard') }}">Dashboard Admin</a>
+                </li>
+              @else
+                <li class="{{ Route::currentRouteName() == 'profile.index' ? 'active' : '' }}">
+                  <a href="{{ route('profile.index') }}">Profile ({{ Auth::user()->name }})</a>
+                </li>
+              @endif
+              <li>
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+                </form>
+              </li>
+            @endauth
           </ul>
         </nav>
       </div>
-    </nav>	
+    </nav>  
   </div>
 </div>
