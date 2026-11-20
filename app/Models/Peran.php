@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Peran extends Model
 {
     use HasFactory;
-    protected $table = 'perans';
-    protected $fillable = ['actor', 'film_id', 'cast_id'];
+
+    protected $fillable = ['actor', 'cast_id', 'film_id'];
+
+    public function cast()
+    {
+        return $this->belongsTo(Cast::class);
+    }
+
+    public function film()
+    {
+        return $this->belongsTo(Film::class);
+    }
 }
